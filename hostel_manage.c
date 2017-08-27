@@ -153,7 +153,7 @@ void sorter()
 void new_entry()
 {
     int choice;
-    FILE *ptr;
+    FILE *ptr,*hostel;
 
     ptr=fopen("record.dat","a+");
     roll_no:
@@ -163,7 +163,7 @@ void new_entry()
     scanf("%s",check.roll_no);
     while(fscanf(ptr,"%s %s %d/%d/%d %d %s %d %s %s %d %s %s\n",add.roll_no, add.name, &add.dob.month, &add.dob.day, &add.dob.year, &add.age, add.city, &add.phone, add.mail_id, add.father_name, &add.father_phone, add.room_no, add.hostel_name)!=EOF)
     {
-        if (check.roll_no==add.roll_no)
+        if (strcmp(check.roll_no,add.roll_no)==0)
             {printf("Students roll no. already in use!");
              goto roll_no;
         }
@@ -191,7 +191,34 @@ void new_entry()
     printf("\n Enter your hostel name from BH-1, BH-2, BH-3, GH-1 :");
     scanf("%s",add.hostel_name);
         fprintf(ptr,"%s %s %d/%d/%d %d %s %d %s %s %d %s %s\n",add.roll_no, add.name, add.dob.month, add.dob.day, add.dob.year, add.age, add.city, add.phone, add.mail_id, add.father_name, add.father_phone, add.room_no, add.hostel_name);
-
+	
+		//adding student roll no. to hostels' list
+	if(strcmp(add.hostel_name,"BH-1")==0)
+	{
+		hostel=fopen("BH-1.dat","a+");
+		fprintf(hostel, "%s\n", add.roll_no);
+		fclose(hostel);		
+	}
+	else if(strcmp(add.hostel_name,"BH-2")==0)
+	{
+		hostel=fopen("BH-2.dat","a+");
+		fprintf(hostel, "%s\n", add.roll_no);
+		fclose(hostel);		
+	}
+	else if(strcmp(add.hostel_name,"BH-3")==0)
+	{
+		hostel=fopen("BH-3.dat","a+");
+		fprintf(hostel, "%s\n", add.roll_no);
+		fclose(hostel);		
+	}
+	else if(strcmp(add.hostel_name,"GH-1")==0)
+	{
+		hostel=fopen("GH-1.dat","a+");
+		fprintf(hostel, "%s\n", add.roll_no);
+		fclose(hostel);		
+	}
+		//----------------------------------------
+    
     fclose(ptr);
     printf("\nStudent added successfully!");
     add_invalid:
