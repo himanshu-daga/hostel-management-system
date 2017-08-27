@@ -1,10 +1,22 @@
+//including header files
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-int i,j;
-int main_exit;
+
+//defining global variables
+int i,j,main_exit;
+
+//declaring functions
 void menu();
+void new_entry();
+void edit();
+void view_list();
+void erase();
+void see();
+void sorter();
 void closer();
+
+//defining structures
 struct date{
     int month,day,year;
 };
@@ -23,8 +35,122 @@ struct {
     struct date dob;
     }add,upd,check,rem,sort;
 
-void new_entry()
+//--------------------------------------------------------------------------------------------------------------------
+//main function
+int main()
+{
+  menu();
+  return 0;
+}
 
+
+//menu function
+void menu()
+{   int choice;
+    printf("\n\n\t\t\tHOSTEL DATA MANAGEMENT SYSTEM");
+    printf("\n\n\n\t\t\t\xB2\xB2\xB2\xB2\xB2\xB2\xB2 WELCOME TO THE MAIN MENU \xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+    printf("\n\n\t\t1.Enter new Student's data\n\t\t2.Update information of existing account\n\t\t3.Check the details of existing account\n\t\t4.View all Students of a particlar Hostel\n\t\t5.Removing existing account\n\t\t6.View all students list\n\t\t7.Exit\n\n\n\n\n\t\t Enter your choice:");
+    scanf("%d",&choice);
+
+    switch(choice)
+    {
+
+        case 1:new_entry();
+        break;
+        case 2:edit();
+        break;
+        case 3:see();
+        break;
+        case 4:sorter();
+        break;
+        case 5:erase();
+        break;
+        case 6:view_list();
+        break;
+        case 7:closer();
+        break;
+        default:menu();
+    }
+}
+
+//------------------------------------------------------------------------------------------------------------------
+//function to display all students of a hostel 
+void sorter()
+{
+    int choice;
+    printf("Enter year choice:\n\n\t\t1. BH-1 \n\t\t2. BH-2 \n\t\t3. BH-3 \n\t\t4. GH-1 \n\n");
+    scanf("%d",&choice);
+    
+    FILE *fp, *sort1, *sort2, *sort3, *sort4;
+    fp=fopen("record.dat","r");
+    int test=0;
+    
+    while(fscanf(fp,"%s %s %d/%d/%d %d %s %d %s %s %d %s %s\n",sort.roll_no, sort.name, &sort.dob.month, &sort.dob.day, &sort.dob.year, &sort.age, sort.city, &sort.phone, sort.mail_id, sort.father_name, &sort.father_phone, sort.room_no, sort.hostel_name)!=EOF)
+    {       
+        if(choice==1 && strcmp(sort.hostel_name,"BH-1")==0)
+        {  
+           sort1=fopen("BH-1.dat","a+");
+           printf("\t\tFollowing are students of BH-1 hostel:");
+           printf("\n\tROLL NO.\tROOM NO.\tNAME\n");
+           printf("\n\t%8s\t %8s\t %s", sort.roll_no, sort.room_no, sort.name);
+           test++;
+           fprintf(sort1, "%s %s %s\n", sort.roll_no, sort.room_no, sort.name);
+           fclose(sort1);
+        }
+        else if(choice==2 && strcmp(sort.hostel_name,"BH-2")==0)
+        {  
+           sort2=fopen("BH-2.dat","a+");
+           printf("\t\tFollowing are students of BH-2 hostel:");
+           printf("\n\tROLL NO.\tROOM NO.\tNAME\n");
+           printf("\n\t%8s\t %8s\t %s", sort.roll_no, sort.room_no, sort.name);
+           test++;
+           fprintf(sort2, "%s %s %s\n", sort.roll_no, sort.room_no, sort.name);
+           fclose(sort2);
+        }
+        else if(choice==3 && strcmp(sort.hostel_name,"BH-3")==0)
+        {
+           sort3=fopen("BH-3.dat","a+");
+           printf("\t\tFollowing are students of BH-3 hostel:");
+           printf("\n\tROLL NO.\tROOM NO.\tNAME\n");
+           printf("\n\t%8s\t %8s\t %s", sort.roll_no, sort.room_no, sort.name);
+           test++;
+           fprintf(sort3, "%s %s %s\n", sort.roll_no, sort.room_no, sort.name);
+           fclose(sort3);
+        }
+        else if(choice==4 && strcmp(sort.hostel_name,"GH-1")==0)
+        {
+           sort4=fopen("GH-1.dat","a+");
+           printf("\t\tFollowing are students of GH-1 hostel:");
+           printf("\n\tROLL NO.\tROOM NO.\tNAME\n");
+           printf("\n\t%8s\t %8s\t %s", sort.roll_no, sort.room_no, sort.name);
+           test++;
+           fprintf(sort4, "%s %s %s\n", sort.roll_no, sort.room_no, sort.name);
+           fclose(sort4);
+        }
+    }
+    fclose(fp);
+    if (test==0)
+        printf("\nNO RECORDS!!\n");
+    
+    sort_list_invalid:
+    printf("\n\nEnter 1 to go to the main menu and 0 to exit:");
+    scanf("%d",&main_exit);
+    
+    if (main_exit==1)
+        menu();
+    else if(main_exit==0)
+        closer();
+    else
+    {
+        printf("\nInvalid!\a");
+        goto sort_list_invalid;
+    }
+    
+}
+
+//------------------------------------------------------------------------------------------------------------------
+//new entry function
+void new_entry()
 {
     int choice;
     FILE *ptr;
@@ -83,6 +209,8 @@ void new_entry()
         }
 }
 
+//------------------------------------------------------------------------------------------------------------------
+//function to view all students
 void view_list()
 {
     FILE *view;
@@ -96,8 +224,8 @@ void view_list()
            printf("\n%8s\t %10s\t\t\t %10s\t\t %d",add.roll_no,add.name,add.city,add.phone);
            test++;
        }
-
     fclose(view);
+    
     if (test==0)
         {   
             printf("\nNO RECORDS!!\n");}
@@ -117,126 +245,9 @@ void view_list()
         }
 }
 
-void edit(void)
-{
-    int choice,test=0;
-    FILE *old,*newrec;
-    old=fopen("record.dat","r");
-    newrec=fopen("new.dat","w");
-
-    printf("\nEnter the roll no. of the student whose info you want to change:");
-    scanf("%s",upd.roll_no);
-    while(fscanf(old,"%s %s %d/%d/%d %d %s %d %s %s %d %s %s\n",add.roll_no, add.name, &add.dob.month, &add.dob.day, &add.dob.year, &add.age, add.city, &add.phone, add.mail_id, add.father_name, &add.father_phone, add.room_no, add.hostel_name)!=EOF)
-    {
-        if (strcmp(add.roll_no,upd.roll_no)==0)
-        {   test=1;
-            printf("\nWhich information do you want to change?\n1.Room no.\n2.Phone\n\nEnter your choice(1 for room no. and 2 for phone ):");
-            scanf("%d",&choice);
-            
-            if(choice==1)
-                {printf("Enter the new room no.:");
-                scanf("%s",upd.room_no);
-                fprintf(newrec,"%s %s %d/%d/%d %d %s %d %s %s %d %s %s\n",add.roll_no, add.name, add.dob.month, add.dob.day, add.dob.year, add.age, add.city, add.phone, add.mail_id, add.father_name, add.father_phone, upd.room_no, add.hostel_name);
-                printf("Changes saved!");
-                }
-            else if(choice==2)
-                {
-                    printf("Enter the new phone number:");
-                scanf("%d",&upd.phone);
-                fprintf(newrec,"%s %s %d/%d/%d %d %s %d %s %s %d %s %s\n",add.roll_no, add.name, add.dob.month, add.dob.day, add.dob.year, add.age, add.city, upd.phone, add.mail_id, add.father_name, add.father_phone, add.room_no, add.hostel_name);
-                printf("Changes saved!");
-                }
-
-        }
-        else
-            fprintf(newrec,"%s %s %d/%d/%d %d %s %d %s %s %d %s %s\n",add.roll_no, add.name, add.dob.month, add.dob.day, add.dob.year, add.age, add.city, add.phone, add.mail_id, add.father_name, add.father_phone, add.room_no, add.hostel_name);
-    }
-    fclose(old);
-    fclose(newrec);
-    remove("record.dat");
-    rename("new.dat","record.dat");
-
-if(test!=1)
-        {   
-            printf("\nRecord not found!!\a\a\a");
-            edit_invalid:
-              printf("\nEnter 0 to try again,1 to return to main menu and 2 to exit:");
-              scanf("%d",&main_exit);
-              
-                 if (main_exit==1)
-
-                    menu();
-                else if (main_exit==2)
-                    closer();
-                else if(main_exit==0)
-                    edit();
-                else
-                    {printf("\nInvalid!\a");
-                    goto edit_invalid;}
-        }
-    else
-        {printf("\n\n\nEnter 1 to go to the main menu and 0 to exit:");
-        scanf("%d",&main_exit);
-        
-        if (main_exit==1)
-            menu();
-        else
-            closer();
-        }
-}
-
-void erase(void)
-{
-    FILE *old,*newrec;
-    int test=0;
-    old=fopen("record.dat","r");
-    newrec=fopen("new.dat","w");
-    printf("Enter the roll np. of student whose data you want to delete:");
-    scanf("%s",rem.roll_no);
-    while (fscanf(old,"%s %s %d/%d/%d %d %s %d %s %s %d %s %s\n",add.roll_no, add.name, &add.dob.month, &add.dob.day, &add.dob.year, &add.age, add.city, &add.phone, add.mail_id, add.father_name, &add.father_phone, add.room_no, add.hostel_name)!=EOF)
-   {
-        if(add.roll_no!=rem.roll_no)
-            fprintf(newrec,"%s %s %d/%d/%d %d %s %d %s %s %d %s %s\n",add.roll_no, add.name, add.dob.month, add.dob.day, add.dob.year, add.age, add.city, add.phone, add.mail_id, add.father_name, add.father_phone, add.room_no, add.hostel_name);
-
-        else
-            {test++;
-            printf("\nRecord deleted successfully!\n");
-            }
-   }
-   fclose(old);
-   fclose(newrec);
-   remove("record.dat");
-   rename("new.dat","record.dat");
-   if(test==0)
-        {
-            printf("\nRecord not found!!\a\a\a");
-            erase_invalid:
-              printf("\nEnter 0 to try again,1 to return to main menu and 2 to exit:");
-              scanf("%d",&main_exit);
-
-                 if (main_exit==1)
-                    menu();
-                else if (main_exit==2)
-                    closer();
-                else if(main_exit==0)
-                    erase();
-                else
-                    {printf("\nInvalid!\a");
-                    goto erase_invalid;}
-        }
-    else
-        {printf("\nEnter 1 to go to the main menu and 0 to exit:");
-        scanf("%d",&main_exit);
-        
-        if (main_exit==1)
-            menu();
-        else
-            closer();
-        }
-
-}
-
-void see(void)
+//------------------------------------------------------------------------------------------------------------------
+//function to view all data of 1 student
+void see()
 {
     FILE *ptr;
     int test=0;
@@ -273,153 +284,130 @@ void see(void)
 
     fclose(ptr);
      if(test!=1)
-        {   
-            printf("\nRecord not found!!\a\a\a");
-            see_invalid:
-              printf("\nEnter 0 to try again,1 to return to main menu and 2 to exit:");
-              scanf("%d",&main_exit);
-              
-                 if (main_exit==1)
-                    menu();
-                else if (main_exit==2)
-                    closer();
-                else if(main_exit==0)
-                    see();
-                else
-                    {
-                        
-                        printf("\nInvalid!\a");
-                        goto see_invalid;}
-        }
-    else
-        {printf("\nEnter 1 to go to the main menu and 0 to exit:");
-        scanf("%d",&main_exit);}
+     	printf("\nRecord not found!!\a\a\a");
+    see_invalid:
+        printf("\nEnter 0 to try again,1 to return to main menu and 2 to exit:");
+        scanf("%d",&main_exit);
         if (main_exit==1)
-        {
-          menu();
+            menu();
+        else if (main_exit==2)
+            closer();
+        else if(main_exit==0)
+            erase();
+        else
+        {	
+        	printf("\nInvalid!\a");
+            goto see_invalid;
+		}
+}
+
+//------------------------------------------------------------------------------------------------------------------
+//function to update student info
+void edit()
+{
+    int choice,test=0;
+    FILE *old,*newrec;
+    old=fopen("record.dat","r");
+    newrec=fopen("new.dat","w");
+
+    printf("\nEnter the roll no. of the student whose info you want to change:");
+    scanf("%s",upd.roll_no);
+    while(fscanf(old,"%s %s %d/%d/%d %d %s %d %s %s %d %s %s\n",add.roll_no, add.name, &add.dob.month, &add.dob.day, &add.dob.year, &add.age, add.city, &add.phone, add.mail_id, add.father_name, &add.father_phone, add.room_no, add.hostel_name)!=EOF)
+
+    {
+        if (strcmp(add.roll_no,upd.roll_no)==0)
+        {   test=1;
+            printf("\nWhich information do you want to change?\n1.Room no.\n2.Phone\n\nEnter your choice(1 for room no. and 2 for phone ):");
+            scanf("%d",&choice);
+            
+            if(choice==1)
+                {printf("Enter the new room no.:");
+                scanf("%s",upd.room_no);
+                fprintf(newrec,"%s %s %d/%d/%d %d %s %d %s %s %d %s %s\n",add.roll_no, add.name, add.dob.month, add.dob.day, add.dob.year, add.age, add.city, add.phone, add.mail_id, add.father_name, add.father_phone, upd.room_no, add.hostel_name);
+                printf("Changes saved!");
+                }
+            else if(choice==2)
+                {
+                    printf("Enter the new phone number:");
+                scanf("%d",&upd.phone);
+                fprintf(newrec,"%s %s %d/%d/%d %d %s %d %s %s %d %s %s\n",add.roll_no, add.name, add.dob.month, add.dob.day, add.dob.year, add.age, add.city, upd.phone, add.mail_id, add.father_name, add.father_phone, add.room_no, add.hostel_name);
+                printf("Changes saved!");
+                }
+
         }
+        else
+            fprintf(newrec,"%s %s %d/%d/%d %d %s %d %s %s %d %s %s\n",add.roll_no, add.name, add.dob.month, add.dob.day, add.dob.year, add.age, add.city, add.phone, add.mail_id, add.father_name, add.father_phone, add.room_no, add.hostel_name);
+    }
+    fclose(old);
+    fclose(newrec);
+    remove("record.dat");
+    rename("new.dat","record.dat");
+
+	if(test!=1)
+        printf("\nRecord not found!!\a\a\a");
+    
+    edit_invalid:
+		printf("\nEnter 0 to try again,1 to return to main menu and 2 to exit:");
+        scanf("%d",&main_exit);  
+        if (main_exit==1)
+			menu();
+        else if (main_exit==2)
+            closer();
+        else if(main_exit==0)
+            edit();
+        else
+        {
+        	printf("\nInvalid!\a");
+            goto edit_invalid;
+        }
+       
+}
+
+//------------------------------------------------------------------------------------------------------------------
+//function to delete records
+void erase()
+{
+    FILE *old,*newrec;
+    int test=0;
+    old=fopen("record.dat","r");
+    newrec=fopen("new.dat","w");
+    printf("Enter the roll np. of student whose data you want to delete:");
+    scanf("%s",rem.roll_no);
+    while (fscanf(old,"%s %s %d/%d/%d %d %s %d %s %s %d %s %s\n",add.roll_no, add.name, &add.dob.month, &add.dob.day, &add.dob.year, &add.age, add.city, &add.phone, add.mail_id, add.father_name, &add.father_phone, add.room_no, add.hostel_name)!=EOF)
+   {
+        if(add.roll_no!=rem.roll_no)
+            fprintf(newrec,"%s %s %d/%d/%d %d %s %d %s %s %d %s %s\n",add.roll_no, add.name, add.dob.month, add.dob.day, add.dob.year, add.age, add.city, add.phone, add.mail_id, add.father_name, add.father_phone, add.room_no, add.hostel_name);
 
         else
-           {
-             closer();
+            {test++;
+            printf("\nRecord deleted successfully!\n");
             }
-
+    }
+    fclose(old);
+    fclose(newrec);
+    remove("record.dat");
+    rename("new.dat","record.dat");
+    if(test==0)
+	    printf("\nRecord not found!!\a\a\a");
+    erase_invalid:
+        printf("\nEnter 0 to try again,1 to return to main menu and 2 to exit:");
+        scanf("%d",&main_exit);
+        if (main_exit==1)
+            menu();
+        else if (main_exit==2)
+            closer();
+        else if(main_exit==0)
+            erase();
+        else
+        {	
+        	printf("\nInvalid!\a");
+            goto erase_invalid;
+		}
 }
 
-void sorter(void)
-{
-    int choice;
-    printf("Enter year choice:\n\n\t\t1. BH-1 \n\t\t2. BH-2 \n\t\t3. BH-3 \n\t\t4. GH-1 \n\n");
-    scanf("%d",&choice);
-    
-    FILE *fp, *sort1, *sort2, *sort3, *sort4;
-    fp=fopen("record.dat","r");
-    int test=0;
-    
-    while(fscanf(fp,"%s %s %d/%d/%d %d %s %d %s %s %d %s %s\n",sort.roll_no, sort.name, &sort.dob.month, &sort.dob.day, &sort.dob.year, &sort.age, sort.city, &sort.phone, sort.mail_id, sort.father_name, &sort.father_phone, sort.room_no, sort.hostel_name)!=EOF)
-    {       
-        if(choice==1 && strcmp(sort.hostel_name,"BH-1")==0)
-        {  
-           sort1=fopen("sortBH-1.dat","a+");
-           printf("\t\tFollowing are students of BH-1 hostel:");
-           printf("\n\tROLL NO.\tROOM NO.\tNAME\n");
-           printf("\n\t%8s\t %8s\t %s", sort.roll_no, sort.room_no, sort.name);
-           test++;
-           fprintf(sort1, "%s %s %s\n", sort.roll_no, sort.room_no, sort.name);
-           fclose(sort1);
-        }
-        else if(choice==2 && strcmp(sort.hostel_name,"BH-2")==0)
-        {  
-           sort2=fopen("sortBH-2.dat","a+");
-           printf("\t\tFollowing are students of BH-2 hostel:");
-           printf("\n\tROLL NO.\tROOM NO.\tNAME\n");
-           printf("\n\t%8s\t %8s\t %s", sort.roll_no, sort.room_no, sort.name);
-           test++;
-           fprintf(sort2, "%s %s %s\n", sort.roll_no, sort.room_no, sort.name);
-           fclose(sort2);
-        }
-        else if(choice==3 && strcmp(sort.hostel_name,"BH-3")==0)
-        {
-           sort3=fopen("sortBH-3.dat","a+");
-           printf("\t\tFollowing are students of BH-3 hostel:");
-           printf("\n\tROLL NO.\tROOM NO.\tNAME\n");
-           printf("\n\t%8s\t %8s\t %s", sort.roll_no, sort.room_no, sort.name);
-           test++;
-           fprintf(sort3, "%s %s %s\n", sort.roll_no, sort.room_no, sort.name);
-           fclose(sort3);
-        }
-        else if(choice==4 && strcmp(sort.hostel_name,"GH-1")==0)
-        {
-           sort4=fopen("sortBH-4.dat","a+");
-           printf("\t\tFollowing are students of GH-1 hostel:");
-           printf("\n\tROLL NO.\tROOM NO.\tNAME\n");
-           printf("\n\t%8s\t %8s\t %s", sort.roll_no, sort.room_no, sort.name);
-           test++;
-           fprintf(sort4, "%s %s %s\n", sort.roll_no, sort.room_no, sort.name);
-           fclose(sort4);
-        }
-    }
-    fclose(fp);
-    if (test==0)
-        {   
-        printf("\nNO RECORDS!!\n");}
-
-sort_list_invalid:
- printf("\n\nEnter 1 to go to the main menu and 0 to exit:");
-    scanf("%d",&main_exit);
-    
-    if (main_exit==1)
-        menu();
-    else if(main_exit==0)
-        closer();
-    else
-    {
-        printf("\nInvalid!\a");
-        goto sort_list_invalid;
-    }
-    
-}
-
+//------------------------------------------------------------------------------------------------------------------
+//function displaying developer credits
 void closer()
 {
     printf("\n\n\n\nDeveloped by Himanshu Daga\n\n\n");
-}
-
-
-void menu(void)
-{   int choice;
-    
-
-    printf("\n\n\t\t\tHOSTEL DATA MANAGEMENT SYSTEM");
-    printf("\n\n\n\t\t\t\xB2\xB2\xB2\xB2\xB2\xB2\xB2 WELCOME TO THE MAIN MENU \xB2\xB2\xB2\xB2\xB2\xB2\xB2");
-    printf("\n\n\t\t1.Enter new Student's data\n\t\t2.Update information of existing account\n\t\t3.Check the details of existing account\n\t\t4.View all Students of a particlar Hostel\n\t\t5.Removing existing account\n\t\t6.View all students list\n\t\t7.Exit\n\n\n\n\n\t\t Enter your choice:");
-    scanf("%d",&choice);
-
-    
-    switch(choice)
-    {
-        case 1:new_entry();
-        break;
-        case 2:edit();
-        break;
-        case 3:see();
-        break;
-        case 4:sorter();
-        break;
-        case 5:erase();
-        break;
-        case 6:view_list();
-        break;
-        case 7:closer();
-        break;
-
-    }
-
-
-
-}
-int main()
-{
-  menu();
-  return 0;
 }
