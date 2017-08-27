@@ -82,6 +82,7 @@ void new_entry()
             goto add_invalid;
         }
 }
+
 void view_list()
 {
     FILE *view;
@@ -115,6 +116,7 @@ void view_list()
             goto view_list_invalid;
         }
 }
+
 void edit(void)
 {
     int choice,test=0;
@@ -126,7 +128,7 @@ void edit(void)
     scanf("%s",upd.roll_no);
     while(fscanf(old,"%s %s %d/%d/%d %d %s %d %s %s %d %s %s\n",add.roll_no, add.name, &add.dob.month, &add.dob.day, &add.dob.year, &add.age, add.city, &add.phone, add.mail_id, add.father_name, &add.father_phone, add.room_no, add.hostel_name)!=EOF)
     {
-        if (add.roll_no==upd.roll_no)
+        if (strcmp(add.roll_no,upd.roll_no)==0)
         {   test=1;
             printf("\nWhich information do you want to change?\n1.Room no.\n2.Phone\n\nEnter your choice(1 for room no. and 2 for phone ):");
             scanf("%d",&choice);
@@ -237,10 +239,8 @@ void erase(void)
 void see(void)
 {
     FILE *ptr;
-    int test=0,rate;
+    int test=0;
     int choice;
-    float time;
-    float intrst;
     ptr=fopen("record.dat","r");
     printf("Do you want to check by\n1.Roll no\n2.Name\nEnter your choice:");
     scanf("%d",&choice);
@@ -250,7 +250,7 @@ void see(void)
 
         while (fscanf(ptr,"%s %s %d/%d/%d %d %s %d %s %s %d %s %s\n",add.roll_no, add.name, &add.dob.month, &add.dob.day, &add.dob.year, &add.age, add.city, &add.phone, add.mail_id, add.father_name, &add.father_phone, add.room_no, add.hostel_name)!=EOF)
         {
-            if(add.roll_no==check.roll_no)
+            if(strcmp(add.roll_no,check.roll_no)==0)
             {   
                 test=1;
 
@@ -389,7 +389,7 @@ void closer()
 void menu(void)
 {   int choice;
     
-    system("color 9");
+
     printf("\n\n\t\t\tHOSTEL DATA MANAGEMENT SYSTEM");
     printf("\n\n\n\t\t\t\xB2\xB2\xB2\xB2\xB2\xB2\xB2 WELCOME TO THE MAIN MENU \xB2\xB2\xB2\xB2\xB2\xB2\xB2");
     printf("\n\n\t\t1.Enter new Student's data\n\t\t2.Update information of existing account\n\t\t3.Check the details of existing account\n\t\t4.View all Students of a particlar Hostel\n\t\t5.Removing existing account\n\t\t6.View all students list\n\t\t7.Exit\n\n\n\n\n\t\t Enter your choice:");
