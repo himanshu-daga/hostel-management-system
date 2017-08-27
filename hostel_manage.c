@@ -77,57 +77,37 @@ void menu()
 //function to display all students of a hostel 
 void sorter()
 {
-    int choice;
+    int choice,test=0;
     printf("Enter year choice:\n\n\t\t1. BH-1 \n\t\t2. BH-2 \n\t\t3. BH-3 \n\t\t4. GH-1 \n\n");
     scanf("%d",&choice);
     
-    FILE *fp, *sort1, *sort2, *sort3, *sort4;
-    fp=fopen("record.dat","r");
-    int test=0;
-    
-    while(fscanf(fp,"%s %s %d/%d/%d %d %s %d %s %s %d %s %s\n",sort.roll_no, sort.name, &sort.dob.month, &sort.dob.day, &sort.dob.year, &sort.age, sort.city, &sort.phone, sort.mail_id, sort.father_name, &sort.father_phone, sort.room_no, sort.hostel_name)!=EOF)
-    {       
-        if(choice==1 && strcmp(sort.hostel_name,"BH-1")==0)
-        {  
-           sort1=fopen("BH-1.dat","a+");
-           printf("\t\tFollowing are students of BH-1 hostel:");
-           printf("\n\tROLL NO.\tROOM NO.\tNAME\n");
-           printf("\n\t%8s\t %8s\t %s", sort.roll_no, sort.room_no, sort.name);
-           test++;
-           fprintf(sort1, "%s %s %s\n", sort.roll_no, sort.room_no, sort.name);
-           fclose(sort1);
-        }
-        else if(choice==2 && strcmp(sort.hostel_name,"BH-2")==0)
-        {  
-           sort2=fopen("BH-2.dat","a+");
-           printf("\t\tFollowing are students of BH-2 hostel:");
-           printf("\n\tROLL NO.\tROOM NO.\tNAME\n");
-           printf("\n\t%8s\t %8s\t %s", sort.roll_no, sort.room_no, sort.name);
-           test++;
-           fprintf(sort2, "%s %s %s\n", sort.roll_no, sort.room_no, sort.name);
-           fclose(sort2);
-        }
-        else if(choice==3 && strcmp(sort.hostel_name,"BH-3")==0)
-        {
-           sort3=fopen("BH-3.dat","a+");
-           printf("\t\tFollowing are students of BH-3 hostel:");
-           printf("\n\tROLL NO.\tROOM NO.\tNAME\n");
-           printf("\n\t%8s\t %8s\t %s", sort.roll_no, sort.room_no, sort.name);
-           test++;
-           fprintf(sort3, "%s %s %s\n", sort.roll_no, sort.room_no, sort.name);
-           fclose(sort3);
-        }
-        else if(choice==4 && strcmp(sort.hostel_name,"GH-1")==0)
-        {
-           sort4=fopen("GH-1.dat","a+");
-           printf("\t\tFollowing are students of GH-1 hostel:");
-           printf("\n\tROLL NO.\tROOM NO.\tNAME\n");
-           printf("\n\t%8s\t %8s\t %s", sort.roll_no, sort.room_no, sort.name);
-           test++;
-           fprintf(sort4, "%s %s %s\n", sort.roll_no, sort.room_no, sort.name);
-           fclose(sort4);
-        }
+    FILE *fp, *hostel;
+    switch(choice)
+    {
+    	case 1: hostel=fopen("BH-1.dat","a+");break;
+    	case 2: hostel=fopen("BH-2.dat","a+");break;
+    	case 3: hostel=fopen("BH-3.dat","a+");break;
+    	case 4: hostel=fopen("GH-1.dat","a+");break;
+    	default: sorter();
     }
+    while(fscanf(hostel,"%s\n",check.roll_no)!=EOF)
+    {
+   	    fp=fopen("record.dat","r");
+    	while(fscanf(fp,"%s %s %d/%d/%d %d %s %d %s %s %d %s %s\n",sort.roll_no, sort.name, &sort.dob.month, &sort.dob.day, &sort.dob.year, &sort.age, sort.city, &sort.phone, sort.mail_id, sort.father_name, &sort.father_phone, sort.room_no, sort.hostel_name)!=EOF)
+    	{
+    		if(strcmp(check.roll_no,sort.roll_no)==0)
+    		{
+    			if(test==0)
+    			{
+    				printf("\t\tFollowing is the list of requested students:");
+		            printf("\n\tROLL NO.\tNAME\tROOM NO.\n");
+    			}
+    			printf("\n\t%8s\t %8s\t %s", sort.roll_no, sort.room_no, sort.name);
+           		test++;
+    		}
+    	}
+    }
+    
     fclose(fp);
     if (test==0)
         printf("\nNO RECORDS!!\n");
